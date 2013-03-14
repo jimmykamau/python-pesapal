@@ -70,38 +70,38 @@ Api
 ---
 
 - PesaPal
-  - options
-    - consumer_key
-    - consumer_secret
+    - options
+        - consumer_key
+        - consumer_secret
 
   - methods: return oauth.OAuthRequest objects
-    - postDirectOrder
-      - options: hash containing:
-        - Amount
-        - Description
-        - Type
-        - Reference
-        - Email
-        - PhoneNumber
-        ( optional )
-        - Currency
-        - FirstName
-        - LastName
-        - LineItems
+      - postDirectOrder
+          - options: hash containing:
+              - Amount
+              - Description
+              - Type
+              - Reference
+              - Email
+              - PhoneNumber
+              ( optional )
+              - Currency
+              - FirstName
+              - LastName
+              - LineItems
 
-    - queryPaymentStatus
-      - options: hash containing:
-        - pesapal_merchant_reference
-        - pesapal_transaction_tracking_id
+      - queryPaymentStatus
+          - options: hash containing:
+              - pesapal_merchant_reference
+              - pesapal_transaction_tracking_id
 
-    - queryPaymentStatusByMerchantRef
-      - options: hash containing:
-        - pesapal_merchant_reference
+      - queryPaymentStatusByMerchantRef
+          - options: hash containing:
+              - pesapal_merchant_reference
 
-    - queryPaymentDetails
-      - options: hash containing:
-        - pesapal_merchant_reference
-        - pesapal_transaction_tracking_id
+      - queryPaymentDetails
+          - options: hash containing:
+              - pesapal_merchant_reference
+              - pesapal_transaction_tracking_id
 
 Testing
 ---
