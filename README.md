@@ -16,6 +16,7 @@ consumer_secret = 'consumer_secret'
 
 import pesapal, urllib2
 
+# make client
 client = pesapal.PesaPal(consumer_key, consumer_secret)
 
 request_data = {
@@ -30,6 +31,7 @@ post_params = {
   'oauth_callback': 'www.example.com/post_payment_page'
 }
 
+# post a direct order
 request = client.postDirectOrder(post_params, request_data)
 print request.to_url()
 
@@ -38,6 +40,7 @@ params = {
   'pesapal_transaction_tracking_id': '000'
 }
 
+# get order status
 request = client.queryPaymentStatus(params)
 url = request.to_url()
 print url
@@ -48,6 +51,7 @@ params = {
   'pesapal_merchant_reference': '000'
 }
 
+# get order status by ref
 request = client.queryPaymentStatusByMerchantRef(params)
 print request.to_url()
 
@@ -56,6 +60,7 @@ params = {
   'pesapal_transaction_tracking_id': '000'
 }
 
+# get detailed order status
 request = client.queryPaymentDetails(params)
 print request.to_url()
 
@@ -82,7 +87,7 @@ Api
         - Currency
         - FirstName
         - LastName
-        'LineItems
+        - LineItems
 
     - queryPaymentStatus
       - options: hash containing:
