@@ -16,21 +16,22 @@ class TestURLS(unittest.TestCase):
 
     def setUp(self):
         self.client = pesapal.PesaPal(KEY, SECRET)
+        self.client.base_url = 'http://demo2.pesapal.com/api/'
 
     def test_post_direct_order(self):
 
         client = self.client
 
         request_data = {
-          'Amount': '',
-          'Description': '',
-          'Type': '',
-          'Reference': '',
-          'PhoneNumber': ''
+          'Amount': '1',
+          'Description': '1',
+          #'Type': '',
+          'Reference': '1',
+          'PhoneNumber': '254700111000'
         }
 
         post_params = {
-          'oauth_callback': 'www.example.com/oauth_callback'
+          'oauth_callback': 'www.myorder.co.ke/oauth_callback'
         }
 
         request = client.postDirectOrder(post_params, request_data)
