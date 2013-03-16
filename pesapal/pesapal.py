@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-try:
-    from lxml import etree
-except:
-    import xml.etree.cElementTree as etree
+import xml.etree.cElementTree as etree
 from cgi import escape
 
 import oauth
