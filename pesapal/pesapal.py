@@ -15,11 +15,13 @@ class InvalidOption(Exception):
 
 class PesaPal(object):
 
-    def __init__(self, consumer_key, consumer_secret):
+    def __init__(self, consumer_key, consumer_secret, testing=True):
 
         self.oauth_consumer = oauth.OAuthConsumer(consumer_key, consumer_secret)
 
         self.base_url = 'https://www.pesapal.com/api/'
+        if testing:
+            self.base_url = 'http://demo2.pesapal.com/api/'
 
     def validateOptions(self, options, default_options):
         for k, v in options.iteritems():

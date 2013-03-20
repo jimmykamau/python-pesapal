@@ -1,23 +1,24 @@
 
-Install
----
+## Install
+
 
 ```
 pip install -e git://github.com/kelonye/python_pesapal.git#egg=pesapal
 ```
 
-Example
----
+## Example
+
 
 ```
-
 consumer_key ='consumer_key'
 consumer_secret = 'consumer_secret'
-
+testing = False
 import pesapal, urllib2
 
-# make client
-client = pesapal.PesaPal(consumer_key, consumer_secret)
+### make client
+client = pesapal.PesaPal(consumer_key, consumer_secret, testing)
+
+### post a direct order
 
 request_data = {
   'Amount': '',
@@ -31,86 +32,100 @@ post_params = {
   'oauth_callback': 'www.example.com/post_payment_page'
 }
 
-# post a direct order
 request = client.postDirectOrder(post_params, request_data)
 print request.to_url()
+
+### get order status
 
 params = {
   'pesapal_merchant_reference': '000',
   'pesapal_transaction_tracking_id': '000'
 }
 
-# get order status
 request = client.queryPaymentStatus(params)
 url = request.to_url()
 print url
 response = urllib2.urlopen(url)
 print response.read()
 
+### get order status by ref
+
 params = {
   'pesapal_merchant_reference': '000'
 }
 
-# get order status by ref
 request = client.queryPaymentStatusByMerchantRef(params)
 print request.to_url()
+
+### get detailed order status
 
 params = {
   'pesapal_merchant_reference': '000',
   'pesapal_transaction_tracking_id': '000'
 }
 
-# get detailed order status
 request = client.queryPaymentDetails(params)
 print request.to_url()
 
 ```
 
-Api
----
+## Api
 
-- PesaPal
-    - options
-        - consumer_key
-        - consumer_secret
+### PesaPal(consumer_key, consumer_secret, testing)
+  
+  testing defaults to true and uses 'http://demo2.pesapal.com/api/'
+  set it to false uses 'https://www.pesapal.com/api/'
 
-  - methods: return oauth.OAuthRequest objects
-      - postDirectOrder
-          - options: hash containing:
-              - Amount
-              - Description
-              - Type
-              - Reference
-              - Email
-              - PhoneNumber
-              ( optional )
-              - Currency
-              - FirstName
-              - LastName
-              - LineItems
+### PesaPal#postDirectOrder(options)
+  
+  returns a oauth.OAuthRequest object
 
-      - queryPaymentStatus
-          - options: hash containing:
-              - pesapal_merchant_reference
-              - pesapal_transaction_tracking_id
+  options are a hash containing:
 
-      - queryPaymentStatusByMerchantRef
-          - options: hash containing:
-              - pesapal_merchant_reference
+  - Amount
+  - Description
+  - Type
+  - Reference
+  - Email
+  - PhoneNumber
+  ( optional )
+  - Currency
+  - FirstName
+  - LastName
+  - LineItems
 
-      - queryPaymentDetails
-          - options: hash containing:
-              - pesapal_merchant_reference
-              - pesapal_transaction_tracking_id
+### PesaPal#queryPaymentStatus(options)
 
-Testing
----
+  returns a oauth.OAuthRequest object
+
+  options are a hash containing:
+
+  - pesapal_merchant_reference
+  - pesapal_transaction_tracking_id
+
+### PesaPal#queryPaymentStatusByMerchantRef(options)
+
+  returns a oauth.OAuthRequest object
+
+  options are a hash containing:
+  
+  - pesapal_merchant_reference
+
+### PesaPal#queryPaymentDetails(options)
+
+  returns a oauth.OAuthRequest object
+
+  options are a hash containing:
+
+  - pesapal_merchant_reference
+  - pesapal_transaction_tracking_id
+
+## Test
 
 ```
 make
 ```
 
-License
----
+## License
 
 MIT

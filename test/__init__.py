@@ -16,7 +16,6 @@ class TestURLS(unittest.TestCase):
 
     def setUp(self):
         self.client = pesapal.PesaPal(KEY, SECRET)
-        self.client.base_url = 'http://demo2.pesapal.com/api/'
 
     def test_post_direct_order(self):
 
