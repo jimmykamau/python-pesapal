@@ -39,7 +39,7 @@ class PesaPal(object):
 
         default_params.update(params)
         params = default_params
-        print params
+
         http_method='GET'
         token = params.pop('token', None)
 
