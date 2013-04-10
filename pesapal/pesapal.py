@@ -158,7 +158,7 @@ class PesaPal(object):
         Same as QueryPaymentStatus, but additional information is returned.
         """
 
-        http_url = 'QueryPaymentStatusByMerchantRef'
+        http_url = 'QueryPaymentDetails'
 
         default_params = {
             'pesapal_merchant_reference': '',

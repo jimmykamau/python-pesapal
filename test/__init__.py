@@ -11,6 +11,9 @@ import pesapal
 KEY = os.environ.get('PESAPAL_KEY', '')
 SECRET = os.environ.get('PESAPAL_SECRET', '')
 
+KEY = 'pmlJCRebcktb5x6B0/JIGe0VfdolripG'
+SECRET = 'OXoQ4jUqX1ADXGd/peJhJRrmTLc='
+
 class TestURLS(unittest.TestCase):
 
     def setUp(self):
