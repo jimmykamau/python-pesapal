@@ -3,7 +3,7 @@
 
 
 ```
-pip install -e git://github.com/kelonye/python_pesapal.git#egg=pesapal
+pip install -e git://github.com/kelonye/python-pesapal.git#egg=pesapal
 ```
 
 ## Example

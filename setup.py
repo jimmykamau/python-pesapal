@@ -8,7 +8,7 @@ setup(
     description='Pesapal API python library.',
     author='Mitchel Kelonye',
     author_email='kelonyemitchel@gmail.com',
-    url='https://github.com/kelonye/python_pesapal',
+    url='https://github.com/kelonye/python-pesapal',
     packages=find_packages(exclude=['test.py']),
     #install_requires = ['oauth'],
     license='MIT License',

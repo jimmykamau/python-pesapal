@@ -23,6 +23,7 @@ class PesaPal(object):
         if testing:
             self.base_url = 'http://demo2.pesapal.com/api/'
 
+    # method to validate passed options
     def validateOptions(self, options, default_options):
         for k, v in options.iteritems():
             if k not in default_options:
@@ -30,11 +31,9 @@ class PesaPal(object):
                 raise InvalidOption(msg)
 
 
+    # method to build and return oauth request
     def getOauthRequest(self, http_url, params, default_params):
 
-        """ build and return oauth request """
-        
-        # validate options
         self.validateOptions(params, default_params)
 
         default_params.update(params)
