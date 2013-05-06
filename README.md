@@ -3,7 +3,7 @@
 
 
 ```
-pip install -e git://github.com/kelonye/python-pesapal.git#egg=pesapal
+pip install pesapal
 ```
 
 ## Example
@@ -27,12 +27,11 @@ request_data = {
   'Reference': '',
   'PhoneNumber': ''
 }
-
 post_params = {
   'oauth_callback': 'www.example.com/post_payment_page'
 }
-
 request = client.postDirectOrder(post_params, request_data)
+# get url to display as an iframe
 print request.to_url()
 
 ### get order status
@@ -41,7 +40,6 @@ params = {
   'pesapal_merchant_reference': '000',
   'pesapal_transaction_tracking_id': '000'
 }
-
 request = client.queryPaymentStatus(params)
 url = request.to_url()
 print url
@@ -53,7 +51,6 @@ print response.read()
 params = {
   'pesapal_merchant_reference': '000'
 }
-
 request = client.queryPaymentStatusByMerchantRef(params)
 print request.to_url()
 
@@ -63,7 +60,6 @@ params = {
   'pesapal_merchant_reference': '000',
   'pesapal_transaction_tracking_id': '000'
 }
-
 request = client.queryPaymentDetails(params)
 print request.to_url()
 
@@ -73,13 +69,13 @@ print request.to_url()
 
 ### PesaPal(consumer_key, consumer_secret, testing)
   
-  testing defaults to true and uses 'http://demo2.pesapal.com/api/'. Pass it as false to use 'https://www.pesapal.com/api/'
+  pass testing as true to use 'http://demo2.pesapal.com/api/' instead of 'https://www.pesapal.com/api/'
 
 ### PesaPal#postDirectOrder(options)
   
-  returns a oauth.OAuthRequest object
+  returns an oauth object
 
-  options are a hash containing:
+  options is a dictionary containing:
 
   - Amount
   - Description
@@ -95,26 +91,26 @@ print request.to_url()
 
 ### PesaPal#queryPaymentStatus(options)
 
-  returns a oauth.OAuthRequest object
+  returns an oauth object
 
-  options are a hash containing:
+  options is a dictionary containing:
 
   - pesapal_merchant_reference
   - pesapal_transaction_tracking_id
 
 ### PesaPal#queryPaymentStatusByMerchantRef(options)
 
-  returns a oauth.OAuthRequest object
+  returns an oauth object
 
-  options are a hash containing:
+  options is a dictionary containing:
   
   - pesapal_merchant_reference
 
 ### PesaPal#queryPaymentDetails(options)
 
-  returns a oauth.OAuthRequest object
+  returns an oauth object
 
-  options are a hash containing:
+  options is a dictionary containing:
 
   - pesapal_merchant_reference
   - pesapal_transaction_tracking_id
