@@ -69,7 +69,7 @@ print request.to_url()
 
 ### PesaPal(consumer_key, consumer_secret, testing)
   
-  pass testing as true to use 'http://demo2.pesapal.com/api/' instead of 'https://www.pesapal.com/api/'
+  pass testing as true to use http://demo2.pesapal.com/api/ instead of https://www.pesapal.com/api/
 
 ### PesaPal#postDirectOrder(options)
   
