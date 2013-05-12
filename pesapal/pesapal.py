@@ -99,7 +99,7 @@ class PesaPal(object):
         if len(line_items) > 0:
             line_items_xml = etree.SubElement(root_xml, 'LineItems')
             for item in line_items:
-                item_xml = etree.SubElement(line_items_xml)
+                item_xml = etree.SubElement(line_items_xml, 'LineItem')
                 item_xml.attrib.update(item)
 
         # populate info
