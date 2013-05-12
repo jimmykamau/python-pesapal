@@ -10,10 +10,11 @@ pip install pesapal
 
 
 ```
+import pesapal, urllib2
+
 consumer_key ='consumer_key'
 consumer_secret = 'consumer_secret'
 testing = False
-import pesapal, urllib2
 
 ### make client
 client = pesapal.PesaPal(consumer_key, consumer_secret, testing)
