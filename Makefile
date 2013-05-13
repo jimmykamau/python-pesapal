@@ -4,4 +4,7 @@ test:
 publish:
 	@python setup.py sdist upload
 
-.PHONY: test
+clean:
+	@rm -rf build dist pesapal.egg-info $(shell find -name ='*.pyc')
+
+.PHONY: test publish clean
