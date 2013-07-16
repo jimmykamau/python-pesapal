@@ -82,13 +82,11 @@ print request.to_url()
   - Description
   - Type
   - Reference
-  - Email
-  - PhoneNumber
-  ( optional )
-  - Currency
-  - FirstName
-  - LastName
-  - LineItems
+  - Email or/and PhoneNumber
+  - Currency ( optional )
+  - FirstName ( optional )
+  - LastName ( optional )
+  - LineItems ( optional )
 
 ### PesaPal#queryPaymentStatus(options)
 
