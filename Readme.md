@@ -116,9 +116,7 @@ print request.to_url()
 
 ## Test
 
-```
-make
-```
+    $ make deps test
 
 ## License
 
