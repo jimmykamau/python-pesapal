@@ -9,7 +9,7 @@ setup(
     author='Mitchel Kelonye',
     author_email='kelonyemitchel@gmail.com',
     url='https://github.com/kelonye/python-pesapal',
-    packages=find_packages(exclude=['test.py']),
+    packages=find_packages(),
     #install_requires = ['oauth'],
     license='MIT License',
     zip_safe=True)
