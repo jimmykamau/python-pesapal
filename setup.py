@@ -4,12 +4,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='pesapal',
-    version='0.0.2',
+    version='0.0.3',
     description='Pesapal API python library.',
     author='Mitchel Kelonye',
     author_email='kelonyemitchel@gmail.com',
     url='https://github.com/kelonye/python-pesapal',
-    packages=find_packages(),
-    #install_requires = ['oauth'],
+    packages=['pesapal',],
+    package_dir = {'pesapal': 'lib'},
     license='MIT License',
     zip_safe=True)
