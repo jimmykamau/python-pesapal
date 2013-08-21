@@ -2,14 +2,12 @@
 ## Install
 
 
-```
-pip install pesapal
-```
+    $ pip install pesapal
+
 
 ## Example
 
-
-```
+```python
 import pesapal, urllib2
 
 consumer_key ='consumer_key'
@@ -65,6 +63,56 @@ request = client.queryPaymentDetails(params)
 print request.to_url()
 
 ```
+
+### Using requests
+
+Install requests with pip
+
+    $ pip install requests
+
+```python
+
+client = pesapal.PesaPal(consumer_key, consumer_secret)
+request = client.queryPaymentStatus(params)
+url = request.to_url()
+response = requests.get(url)
+if response.status_code == 200:
+  print response.text
+
+```
+
+### Using urllib3
+
+    $ pip install urllib3
+
+```python
+client = pesapal.PesaPal(consumer_key, consumer_secret)
+request = client.queryPaymentStatus(params)
+url = request.to_url()
+
+import urllib3
+http = urllib3.PoolManager()
+
+response = http.request('GET', url)
+if response.status == 200:
+  print response.data
+
+```
+
+### Using Google App Engine's urlfetch
+
+```python
+from google.appengine.api import urlfetch
+
+client = pesapal.PesaPal(consumer_key, consumer_secret)
+request = client.queryPaymentStatus(params)
+url = request.to_url()
+response = urlfetch.fetch(url)
+if response.status_code == 200:
+    print response.content
+
+```
+
 
 ## Api
 
