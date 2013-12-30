@@ -122,7 +122,7 @@ if response.status_code == 200:
 
 ### PesaPal#postDirectOrder(options)
   
-  returns an oauth object
+  returns an oauth object ( get url with `.to_url()` method )
 
   options is a dictionary containing:
 
@@ -138,7 +138,7 @@ if response.status_code == 200:
 
 ### PesaPal#queryPaymentStatus(options)
 
-  returns an oauth object
+  returns an oauth object ( get url with `.to_url()` method )
 
   options is a dictionary containing:
 
@@ -147,7 +147,7 @@ if response.status_code == 200:
 
 ### PesaPal#queryPaymentStatusByMerchantRef(options)
 
-  returns an oauth object
+  returns an oauth object ( get url with `.to_url()` method )
 
   options is a dictionary containing:
   
@@ -155,7 +155,7 @@ if response.status_code == 200:
 
 ### PesaPal#queryPaymentDetails(options)
 
-  returns an oauth object
+  returns an oauth object ( get url with `.to_url()` method )
 
   options is a dictionary containing:
 
