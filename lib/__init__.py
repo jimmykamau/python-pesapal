@@ -8,161 +8,168 @@ from oauth import OAuthConsumer, OAuthRequest
 
 SIGNATURE_METHOD = oauth.OAuthSignatureMethod_HMAC_SHA1()
 
+# configurable enc variables
+consumer_key = None
+consumer_secret = None
+testing = True
+
+
+class MissingKeyError(Exception):
+    pass
 
 class InvalidOption(Exception):
     pass
 
 
-class PesaPal(object):
-
-    def __init__(self, consumer_key, consumer_secret, testing=True):
-
-        self.oauth_consumer = oauth.OAuthConsumer(consumer_key, consumer_secret)
-
-        self.base_url = 'https://www.pesapal.com/api/'
-        if testing:
-            self.base_url = 'http://demo2.pesapal.com/api/'
-
-    # method to validate passed options
-    def validateOptions(self, options, default_options):
-        for k, v in options.iteritems():
-            if k not in default_options:
-                msg = 'Option %s not found in %s' % (k, default_options.keys())
-                raise InvalidOption(msg)
+# method to validate passed options
+def validateOptions(options, default_options):
+    for k, v in options.iteritems():
+        if k not in default_options:
+            msg = 'Option %s not found in %s' % (k, default_options.keys())
+            raise InvalidOption(msg)
 
 
-    # method to build and return oauth request
-    def getOauthRequest(self, http_url, params, default_params):
+# method to build and return oauth request
+def createOauthRequest(http_url, params, default_params):
 
-        self.validateOptions(params, default_params)
+    validateOptions(params, default_params)
 
-        default_params.update(params)
-        params = default_params
+    default_params.update(params)
+    params = default_params
 
-        http_method='GET'
-        token = params.pop('token', None)
+    http_method='GET'
+    token = params.pop('token', None)
 
-        url = self.base_url + http_url
+    base_url = 'https://www.pesapal.com/api/'
+    if testing:
+        base_url = 'http://demo2.pesapal.com/api/'
 
-        request = OAuthRequest.from_consumer_and_token(
-            self.oauth_consumer,
-            http_url= url,
-            http_method=http_method,
-            parameters=params
-        )
-        request.sign_request(SIGNATURE_METHOD, self.oauth_consumer, token)
-        return request
+    url = base_url + http_url
 
+    if not consumer_key:
+        raise MissingKeyError('provide consumer key')
+    if not consumer_secret:
+        raise MissingKeyError('provide consumer consumer_secret')
+    oauth_consumer = oauth.OAuthConsumer(consumer_key, consumer_secret)
 
-    def postDirectOrder(self, params, request_data):
-        """
-        PostPesapalDirectOrderV4
-        ---
-        Use this to post a transaction to PesaPal. PesaPal will present the user with a page which contains the available payment options and will redirect to your site once the user has completed the payment process.
-        """
-
-        default_request_data = {
-            'Amount': '',
-            'Description': '',
-            'Type': 'MERCHANT',
-            'Reference': '',
-            'Email': '',
-            'PhoneNumber': '',
-            # optional
-            'Currency': '',
-            'FirstName': '',
-            'LastName': '',
-            'LineItems': [
-                # {
-                #     'UniqueId': '',
-                #     'Particulars': '',
-                #     'Quantity': '',
-                #     'UnitCost': '',
-                #     'SubTotal': ''
-                # }
-            ]
-        }
-
-        # validate xml data
-        self.validateOptions(request_data, default_request_data)
-        default_request_data.update(request_data)
-        request_data = default_request_data
+    request = OAuthRequest.from_consumer_and_token(
+        oauth_consumer,
+        http_url= url,
+        http_method=http_method,
+        parameters=params
+    )
+    request.sign_request(SIGNATURE_METHOD, oauth_consumer, token)
+    return request.to_url()
 
 
-        root_xml = etree.Element('PesapalDirectOrderInfo')
-        root_xml.attrib['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance'
-        root_xml.attrib['xmlns:xsd'] = 'http://www.w3.org/2001/XMLSchema'
-        root_xml.attrib['xmlns'] = 'http://www.pesapal.com'
+def postDirectOrder(params, request_data):
+    """
+    PostPesapalDirectOrderV4
+    ---
+    Use this to post a transaction to PesaPal. PesaPal will present the user with a page which contains the available payment options and will redirect to your site once the user has completed the payment process.
+    """
 
-        # populate line items
-        line_items = request_data.pop('LineItems')
-        if len(line_items) > 0:
-            line_items_xml = etree.SubElement(root_xml, 'LineItems')
-            for item in line_items:
-                item_xml = etree.SubElement(line_items_xml, 'LineItem')
-                item_xml.attrib.update(item)
+    default_request_data = {
+        'Amount': '',
+        'Description': '',
+        'Type': 'MERCHANT',
+        'Reference': '',
+        'Email': '',
+        'PhoneNumber': '',
+        # optional
+        'Currency': '',
+        'FirstName': '',
+        'LastName': '',
+        'LineItems': [
+            # {
+            #     'UniqueId': '',
+            #     'Particulars': '',
+            #     'Quantity': '',
+            #     'UnitCost': '',
+            #     'SubTotal': ''
+            # }
+        ]
+    }
 
-        # populate info
-        root_xml.attrib.update(request_data)
+    # validate xml data
+    validateOptions(request_data, default_request_data)
+    default_request_data.update(request_data)
+    request_data = default_request_data
 
-        # pesapal_request_data
-        pesapal_request_data = escape(etree.tostring(root_xml))
 
-        default_params = {
-            'oauth_callback': '',
-            #'oauth_consumer_key': '',
-            #'oauth_nonce': '',
-            #'oauth_signature': '',
-            #'oauth_signature_method': '',
-            #'oauth_timestamp': '',
-            #'oauth_version': '1.0',
-            'pesapal_request_data': pesapal_request_data
-        }
+    root_xml = etree.Element('PesapalDirectOrderInfo')
+    root_xml.attrib['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance'
+    root_xml.attrib['xmlns:xsd'] = 'http://www.w3.org/2001/XMLSchema'
+    root_xml.attrib['xmlns'] = 'http://www.pesapal.com'
 
-        http_url = 'PostPesapalDirectOrderV4'
-        
-        request = self.getOauthRequest(http_url, params, default_params)
-        return request
+    # populate line items
+    line_items = request_data.pop('LineItems')
+    if len(line_items) > 0:
+        line_items_xml = etree.SubElement(root_xml, 'LineItems')
+        for item in line_items:
+            item_xml = etree.SubElement(line_items_xml, 'LineItem')
+            item_xml.attrib.update(item)
 
-    def queryPaymentStatus(self, params):
-        """
-        Use this to query the status of the transaction. When a transaction is posted to PesaPal, it may be in a PENDING, COMPLETED or FAILED state. If the transaction is PENDING, the payment may complete or fail at a later stage. Both the unique order id generated by your system and the pesapal tracking id are required as input parameters.
-        """
-        http_url = 'QueryPaymentStatus'
+    # populate info
+    root_xml.attrib.update(request_data)
 
-        default_params = {
-            'pesapal_merchant_reference': '',
-            'pesapal_transaction_tracking_id': ''
-        }
-        
-        request = self.getOauthRequest(http_url, params, default_params)
-        return request
-        
-    def queryPaymentStatusByMerchantRef(self, params):
-        """
-        Same as QueryPaymentStatus, but only the unique order id genereated by your system is required as the input parameter.
-        """
-        
-        http_url = 'QueryPaymentStatusByMerchantRef'
+    # pesapal_request_data
+    pesapal_request_data = escape(etree.tostring(root_xml))
 
-        default_params = {
-            'pesapal_merchant_reference': ''
-        }
+    default_params = {
+        'oauth_callback': '',
+        #'oauth_consumer_key': '',
+        #'oauth_nonce': '',
+        #'oauth_signature': '',
+        #'oauth_signature_method': '',
+        #'oauth_timestamp': '',
+        #'oauth_version': '1.0',
+        'pesapal_request_data': pesapal_request_data
+    }
 
-        request = self.getOauthRequest(http_url, params, default_params)
-        return request
+    http_url = 'PostPesapalDirectOrderV4'
+    
+    return createOauthRequest(http_url, params, default_params)
 
-    def queryPaymentDetails(self, params):
-        """
-        Same as QueryPaymentStatus, but additional information is returned.
-        """
 
-        http_url = 'QueryPaymentDetails'
+def queryPaymentStatus(params):
+    """
+    Use this to query the status of the transaction. When a transaction is posted to PesaPal, it may be in a PENDING, COMPLETED or FAILED state. If the transaction is PENDING, the payment may complete or fail at a later stage. Both the unique order id generated by your system and the pesapal tracking id are required as input parameters.
+    """
+    http_url = 'QueryPaymentStatus'
 
-        default_params = {
-            'pesapal_merchant_reference': '',
-            'pesapal_transaction_tracking_id': ''
-        }
+    default_params = {
+        'pesapal_merchant_reference': '',
+        'pesapal_transaction_tracking_id': ''
+    }
+    
+    return createOauthRequest(http_url, params, default_params)
 
-        request = self.getOauthRequest(http_url, params, default_params)
-        return request
+
+def queryPaymentStatusByMerchantRef(params):
+    """
+    Same as QueryPaymentStatus, but only the unique order id genereated by your system is required as the input parameter.
+    """
+    
+    http_url = 'QueryPaymentStatusByMerchantRef'
+
+    default_params = {
+        'pesapal_merchant_reference': ''
+    }
+
+    return createOauthRequest(http_url, params, default_params)
+
+
+def queryPaymentDetails(params):
+    """
+    Same as QueryPaymentStatus, but additional information is returned.
+    """
+
+    http_url = 'QueryPaymentDetails'
+
+    default_params = {
+        'pesapal_merchant_reference': '',
+        'pesapal_transaction_tracking_id': ''
+    }
+
+    return createOauthRequest(http_url, params, default_params)

@@ -1,37 +1,37 @@
 
 ## Install
 
-
     $ pip install pesapal
 
 
 ## Example
 
 ```python
-import pesapal, urllib2
 
-consumer_key ='consumer_key'
-consumer_secret = 'consumer_secret'
-testing = False
+import urllib2
+import pesapal
 
-### make client
-client = pesapal.PesaPal(consumer_key, consumer_secret, testing)
+
+pesapal.consumer_key ='consumer_key'
+pesapal.consumer_secret = 'consumer_secret'
+pesapal.testing = False
+
 
 ### post a direct order
 
 request_data = {
-  'Amount': '',
-  'Description': '',
-  'Type': '',
-  'Reference': '',
-  'PhoneNumber': ''
+  'Amount': '100',
+  'Description': 'E-book purchase',
+  'Type': 'MERCHANT',
+  'Reference': '12erwe',
+  'PhoneNumber': '0700111000'
 }
 post_params = {
-  'oauth_callback': 'www.example.com/post_payment_page'
+  'oauth_callback': 'https://www.example.com/post_payment_page/'
 }
-request = client.postDirectOrder(post_params, request_data)
-# get url to display as an iframe
-print request.to_url()
+# build url to redirect user to confirm payment
+url = pesapal.postDirectOrder(post_params, request_data)
+
 
 ### get order status
 
@@ -39,19 +39,20 @@ params = {
   'pesapal_merchant_reference': '000',
   'pesapal_transaction_tracking_id': '000'
 }
-request = client.queryPaymentStatus(params)
-url = request.to_url()
-print url
+url = pesapal.queryPaymentStatus(params)
 response = urllib2.urlopen(url)
 print response.read()
+
 
 ### get order status by ref
 
 params = {
   'pesapal_merchant_reference': '000'
 }
-request = client.queryPaymentStatusByMerchantRef(params)
-print request.to_url()
+url = pesapal.queryPaymentStatusByMerchantRef(params)
+response = urllib2.urlopen(url)
+print response.read()
+
 
 ### get detailed order status
 
@@ -59,72 +60,31 @@ params = {
   'pesapal_merchant_reference': '000',
   'pesapal_transaction_tracking_id': '000'
 }
-request = client.queryPaymentDetails(params)
-print request.to_url()
+url = pesapal.queryPaymentDetails(params)
+response = urllib2.urlopen(url)
+print response.read()
 
 ```
-
-### Using requests
-
-Install requests with pip
-
-    $ pip install requests
-
-```python
-
-client = pesapal.PesaPal(consumer_key, consumer_secret)
-request = client.queryPaymentStatus(params)
-url = request.to_url()
-response = requests.get(url)
-if response.status_code == 200:
-  print response.text
-
-```
-
-### Using urllib3
-
-    $ pip install urllib3
-
-```python
-client = pesapal.PesaPal(consumer_key, consumer_secret)
-request = client.queryPaymentStatus(params)
-url = request.to_url()
-
-import urllib3
-http = urllib3.PoolManager()
-
-response = http.request('GET', url)
-if response.status == 200:
-  print response.data
-
-```
-
-### Using Google App Engine's urlfetch
-
-```python
-from google.appengine.api import urlfetch
-
-client = pesapal.PesaPal(consumer_key, consumer_secret)
-request = client.queryPaymentStatus(params)
-url = request.to_url()
-response = urlfetch.fetch(url)
-if response.status_code == 200:
-    print response.content
-
-```
-
 
 ## Api
 
-### PesaPal(consumer_key, consumer_secret, testing)
-  
-  pass testing as true to use http://demo2.pesapal.com/api/ instead of https://www.pesapal.com/api/
+### consumer_key
 
-### PesaPal#postDirectOrder(options)
-  
-  returns an oauth object ( get url with `.to_url()` method )
+  configurable consumer key
 
-  options is a dictionary containing:
+### consumer_secret
+
+  configurable consumer secret
+
+### testing
+  
+  variable that sets the base api url as http://demo2.pesapal.com/api/ or https://www.pesapal.com/api/
+
+### postDirectOrder(post_params, request_data)
+  
+  returns an oauth object
+
+  post_params is a dictionary containing:
 
   - Amount
   - Description
@@ -136,26 +96,31 @@ if response.status_code == 200:
   - LastName ( optional )
   - LineItems ( optional )
 
-### PesaPal#queryPaymentStatus(options)
+  request_data is a dictionary containing:
+  
+  - oauth_callback
 
-  returns an oauth object ( get url with `.to_url()` method )
+
+### queryPaymentStatus(options)
+
+  returns an oauth object
 
   options is a dictionary containing:
 
   - pesapal_merchant_reference
   - pesapal_transaction_tracking_id
 
-### PesaPal#queryPaymentStatusByMerchantRef(options)
+### queryPaymentStatusByMerchantRef(options)
 
-  returns an oauth object ( get url with `.to_url()` method )
+  returns an oauth object
 
   options is a dictionary containing:
   
   - pesapal_merchant_reference
 
-### PesaPal#queryPaymentDetails(options)
+### queryPaymentDetails(options)
 
-  returns an oauth object ( get url with `.to_url()` method )
+  returns an oauth object
 
   options is a dictionary containing:
 

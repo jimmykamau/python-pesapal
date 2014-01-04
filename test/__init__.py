@@ -8,20 +8,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import lib as pesapal
 
-KEY = os.environ.get('PESAPAL_KEY', '')
-SECRET = os.environ.get('PESAPAL_SECRET', '')
-
-KEY = 'H7jjIYLsuYGWZEJnuO8mIEMMPa4K15O6'
-SECRET = 'C0hFRtwKY+rKfol3usK8ejhgL+s='
+pesapal.consumer_key = os.environ.get('PESAPAL_KEY', 'H7jjIYLsuYGWZEJnuO8mIEMMPa4K15O6')
+pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', 'C0hFRtwKY+rKfol3usK8ejhgL+s=')
+pesapal.testing = True
 
 class TestURLS(unittest.TestCase):
 
-    def setUp(self):
-        self.client = pesapal.PesaPal(KEY, SECRET)
-
     def test_post_direct_order(self):
-
-        client = self.client
 
         request_data = {
           'Amount': '1',
@@ -35,44 +28,33 @@ class TestURLS(unittest.TestCase):
           'oauth_callback': 'www.myorder.co.ke/oauth_callback'
         }
 
-        request = client.postDirectOrder(post_params, request_data)
-        print request.to_url()
+        print pesapal.postDirectOrder(post_params, request_data)
 
     def test_query_payment_status(self):
-
-        client = self.client
 
         params = {
           'pesapal_merchant_reference': '000',
           'pesapal_transaction_tracking_id': '000'
         }
 
-        request = client.queryPaymentStatus(params)
-        print request.to_url()
+        print pesapal.queryPaymentStatus(params)
 
     def test_query_payment_status_by_merchant_ref(self):
-
-        client = self.client
 
         params = {
           'pesapal_merchant_reference': '000'
         }
 
-        request = client.queryPaymentStatusByMerchantRef(params)
-        print request.to_url()
+        print pesapal.queryPaymentStatusByMerchantRef(params)
 
     def test_query_payment_details(self):
-
-        client = self.client
 
         params = {
           'pesapal_merchant_reference': '000',
           'pesapal_transaction_tracking_id': '000'
         }
 
-        request = client.queryPaymentDetails(params)
-        print request.to_url()
-
+        print pesapal.queryPaymentDetails(params)
 
 
 if __name__ == '__main__':
