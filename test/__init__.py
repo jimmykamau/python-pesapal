@@ -16,16 +16,15 @@ class TestURLS(unittest.TestCase):
 
     def test_post_direct_order(self):
 
+        post_params = {
+          'oauth_callback': 'www.myorder.co.ke/oauth_callback'
+        }
         request_data = {
           'Amount': '1',
           'Description': '1',
           #'Type': '',
           'Reference': '1',
           'PhoneNumber': '254700111000'
-        }
-
-        post_params = {
-          'oauth_callback': 'www.myorder.co.ke/oauth_callback'
         }
 
         print pesapal.postDirectOrder(post_params, request_data)
