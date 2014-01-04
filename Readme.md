@@ -82,7 +82,7 @@ print response.read()
 
 ### postDirectOrder(post_params, request_data)
   
-  returns an oauth object
+  returns url
 
   post_params is a dictionary containing:
 
@@ -103,7 +103,7 @@ print response.read()
 
 ### queryPaymentStatus(options)
 
-  returns an oauth object
+  returns url
 
   options is a dictionary containing:
 
@@ -112,7 +112,7 @@ print response.read()
 
 ### queryPaymentStatusByMerchantRef(options)
 
-  returns an oauth object
+  returns url
 
   options is a dictionary containing:
   
@@ -120,7 +120,7 @@ print response.read()
 
 ### queryPaymentDetails(options)
 
-  returns an oauth object
+  returns url
 
   options is a dictionary containing:
 
