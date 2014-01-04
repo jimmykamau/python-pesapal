@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pesapal',
-    version='0.0.3',
+    version='0.0.4',
     description='Pesapal API python library.',
     author='Mitchel Kelonye',
     author_email='kelonyemitchel@gmail.com',
