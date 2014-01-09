@@ -42,7 +42,7 @@ def createOauthRequest(http_url, params, default_params):
 
     base_url = 'https://www.pesapal.com/api/'
     if testing:
-        base_url = 'http://demo2.pesapal.com/api/'
+        base_url = 'http://demo.pesapal.com/api/'
 
     url = base_url + http_url
 

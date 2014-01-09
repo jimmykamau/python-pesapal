@@ -78,7 +78,7 @@ print response.read()
 
 ### testing
   
-  variable that sets the base api url as http://demo2.pesapal.com/api/ or https://www.pesapal.com/api/
+  variable that sets the base api url as http://demo.pesapal.com/api/ or https://www.pesapal.com/api/
 
 ### postDirectOrder(post_params, request_data)
   
