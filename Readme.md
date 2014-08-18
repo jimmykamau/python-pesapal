@@ -66,25 +66,29 @@ print response.read()
 
 ```
 
+## Django, GAE
+
+For a more opionated solution, checkout [gae-pesapal](https://github.com/kelonye/gae-pesapal) or [django-pesapal](https://github.com/kelonye/django-pesapal)(WIP).
+
 ## Api
 
 ### consumer_key
 
-  configurable consumer key
+configurable consumer key
 
 ### consumer_secret
 
-  configurable consumer secret
+configurable consumer secret
 
 ### testing
   
-  variable that sets the base api url as http://demo.pesapal.com/api/ or https://www.pesapal.com/api/
+variable that sets the base api url as http://demo.pesapal.com/api/ or https://www.pesapal.com/api/
 
 ### postDirectOrder(post_params, request_data)
   
-  returns url
+returns order url
 
-  post_params is a dictionary containing:
+`post_params` is a dictionary containing:
 
   - Amount
   - Description
@@ -96,33 +100,33 @@ print response.read()
   - LastName ( optional )
   - LineItems ( optional )
 
-  request_data is a dictionary containing:
+`request_data` is a dictionary containing:
   
   - oauth_callback
 
 
 ### queryPaymentStatus(options)
 
-  returns url
+returns url to retrive payment status
 
-  options is a dictionary containing:
+`options` is a dictionary containing:
 
   - pesapal_merchant_reference
   - pesapal_transaction_tracking_id
 
 ### queryPaymentStatusByMerchantRef(options)
 
-  returns url
+returns url to retrive payment status
 
-  options is a dictionary containing:
+`options` is a dictionary containing:
   
   - pesapal_merchant_reference
 
 ### queryPaymentDetails(options)
 
-  returns url
+returns url to retrive a detailed status of a payment
 
-  options is a dictionary containing:
+`options` is a dictionary containing:
 
   - pesapal_merchant_reference
   - pesapal_transaction_tracking_id
