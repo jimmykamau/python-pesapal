@@ -82,11 +82,11 @@ def postDirectOrder(params, request_data):
         'LastName': '',
         'LineItems': [
             # {
-            #     'UniqueId': '',
-            #     'Particulars': '',
-            #     'Quantity': '',
-            #     'UnitCost': '',
-            #     'SubTotal': ''
+            #     'uniqueid': '',
+            #     'particulars': '',
+            #     'quantity': '',
+            #     'unitcost': '',
+            #     'subtotal': ''
             # }
         ]
     }
@@ -105,9 +105,9 @@ def postDirectOrder(params, request_data):
     # populate line items
     line_items = request_data.pop('LineItems')
     if len(line_items) > 0:
-        line_items_xml = etree.SubElement(root_xml, 'LineItems')
+        line_items_xml = etree.SubElement(root_xml, 'lineitems')
         for item in line_items:
-            item_xml = etree.SubElement(line_items_xml, 'LineItem')
+            item_xml = etree.SubElement(line_items_xml, 'lineitem')
             item_xml.attrib.update(item)
 
     # populate info
@@ -115,7 +115,7 @@ def postDirectOrder(params, request_data):
 
     # pesapal_request_data
     pesapal_request_data = escape(etree.tostring(root_xml))
-
+    # print etree.tostring(root_xml)
     default_params = {
         'oauth_callback': '',
         #'oauth_consumer_key': '',

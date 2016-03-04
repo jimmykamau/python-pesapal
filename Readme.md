@@ -100,10 +100,27 @@ returns order url
   - LastName ( optional )
   - LineItems ( optional )
 
+#### Line Items
+
+This is an array of the products contained in the order:
+
+```js
+
+{
+  LineItems: [
+    {
+      'uniqueid': '',
+      'particulars': '',
+      'quantity': '',
+      'unitCost': '',
+      'subTotal': ''
+    }
+  ]
+}
+
 `request_data` is a dictionary containing:
   
   - oauth_callback
-
 
 ### queryPaymentStatus(options)
 

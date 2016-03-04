@@ -8,8 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import lib as pesapal
 
-pesapal.consumer_key = os.environ.get('PESAPAL_KEY', 'H7jjIYLsuYGWZEJnuO8mIEMMPa4K15O6')
-pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', 'C0hFRtwKY+rKfol3usK8ejhgL+s=')
+pesapal.consumer_key = os.environ.get('PESAPAL_KEY', None)
+pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', None)
 pesapal.testing = True
 
 class TestURLS(unittest.TestCase):
@@ -24,7 +24,22 @@ class TestURLS(unittest.TestCase):
           'Description': '1',
           #'Type': '',
           'Reference': '1',
-          'PhoneNumber': '254700111000'
+          'PhoneNumber': '254700111000',
+          'LineItems': [
+            {
+              'uniqueid': '1',
+              'particulars': 'PS4',
+              'quantity': '1',
+              'unitcost': '50000',
+              'subTotal': '50000',
+            }, {
+              'uniqueId': '2',
+              'particulars': 'Driveclub',
+              'quantity': '1',
+              'unitcost': '3000',
+              'subTotal': '3000',
+            }
+          ]
         }
 
         print pesapal.postDirectOrder(post_params, request_data)
