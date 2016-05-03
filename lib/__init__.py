@@ -2,8 +2,8 @@
 import xml.etree.cElementTree as etree
 from cgi import escape
 
-import lib.oauth_pesapal as oauth
-from lib.oauth_pesapal import OAuthConsumer, OAuthRequest
+import python3_pesapal.oauth_pesapal as oauth
+from python3_pesapal.oauth_pesapal import OAuthConsumer, OAuthRequest
 
 
 SIGNATURE_METHOD = oauth.OAuthSignatureMethod_HMAC_SHA1()

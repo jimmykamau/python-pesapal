@@ -1,7 +1,7 @@
 
 ## Install
 
-    $ pip install pesapal
+    $ pip install python3_pesapal
 
 
 ## Example
@@ -152,7 +152,7 @@ returns url to retrive a detailed status of a payment
 
 ## Test
 
-    $ make deps test
+    $ python3 test/test.py
 
 ## License
 

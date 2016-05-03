@@ -6,11 +6,11 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import lib as pesapal
+import python3_pesapal
 
-pesapal.consumer_key = os.environ.get('PESAPAL_KEY', None)
-pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', None)
-pesapal.testing = True
+python3_pesapal.consumer_key = os.environ.get('PESAPAL_KEY', None)
+python3_pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', None)
+python3_pesapal.testing = True
 
 class TestURLS(unittest.TestCase):
 
@@ -42,7 +42,7 @@ class TestURLS(unittest.TestCase):
           ]
         }
 
-        print (pesapal.postDirectOrder(post_params, request_data))
+        print (python3_pesapal.postDirectOrder(post_params, request_data))
 
     def test_query_payment_status(self):
 
@@ -51,7 +51,7 @@ class TestURLS(unittest.TestCase):
           'pesapal_transaction_tracking_id': '000'
         }
 
-        print (pesapal.queryPaymentStatus(params))
+        print (python3_pesapal.queryPaymentStatus(params))
 
     def test_query_payment_status_by_merchant_ref(self):
 
@@ -59,7 +59,7 @@ class TestURLS(unittest.TestCase):
           'pesapal_merchant_reference': '000'
         }
 
-        print (pesapal.queryPaymentStatusByMerchantRef(params))
+        print (python3_pesapal.queryPaymentStatusByMerchantRef(params))
 
     def test_query_payment_details(self):
 
@@ -68,7 +68,7 @@ class TestURLS(unittest.TestCase):
           'pesapal_transaction_tracking_id': '000'
         }
 
-        print (pesapal.queryPaymentDetails(params))
+        print (python3_pesapal.queryPaymentDetails(params))
 
 
 if __name__ == '__main__':
