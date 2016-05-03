@@ -9,7 +9,7 @@
 ```python
 
 import requests
-import python_pesapal as pesapal
+import python3_pesapal as pesapal
 
 
 pesapal.consumer_key = 'consumer-key'
