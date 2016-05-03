@@ -8,10 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import lib as pesapal
 
-pesapal.consumer_key = 'SSr2MkbtF+/4wQIDESbP9muXMOfQ4Vof'
-pesapal.consumer_secret = 'Lk/zjnsyjoM283g5+Tr0K5e8Jgo='
-#pesapal.consumer_key = os.environ.get('PESAPAL_KEY', None)
-#pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', None)
+pesapal.consumer_key = os.environ.get('PESAPAL_KEY', None)
+pesapal.consumer_secret = os.environ.get('PESAPAL_SECRET', None)
 pesapal.testing = True
 
 class TestURLS(unittest.TestCase):

@@ -2,3 +2,4 @@
 build/
 pesapal.egg-info/
 dist
+__pycache__/
