@@ -2,8 +2,8 @@
 import xml.etree.cElementTree as etree
 from cgi import escape
 
-import oauth
-from oauth import OAuthConsumer, OAuthRequest
+import lib.oauth_pesapal as oauth
+from lib.oauth_pesapal import OAuthConsumer, OAuthRequest
 
 
 SIGNATURE_METHOD = oauth.OAuthSignatureMethod_HMAC_SHA1()
@@ -23,7 +23,7 @@ class InvalidOption(Exception):
 
 # method to validate passed options
 def validateOptions(options, default_options):
-    for k, v in options.iteritems():
+    for k, v in options.items():
         if k not in default_options:
             msg = 'Option %s not found in %s' % (k, default_options.keys())
             raise InvalidOption(msg)
@@ -114,7 +114,7 @@ def postDirectOrder(params, request_data):
     root_xml.attrib.update(request_data)
 
     # pesapal_request_data
-    pesapal_request_data = escape(etree.tostring(root_xml))
+    pesapal_request_data = escape(etree.tostring(root_xml, encoding='unicode'))
     # print etree.tostring(root_xml)
     default_params = {
         'oauth_callback': '',

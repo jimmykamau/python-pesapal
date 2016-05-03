@@ -8,40 +8,42 @@
 
 ```python
 
-import urllib2
-import pesapal
+import requests
+import python_pesapal as pesapal
 
 
-pesapal.consumer_key = 'consumer_key'
-pesapal.consumer_secret = 'consumer_secret'
-pesapal.testing = False
+pesapal.consumer_key = 'consumer-key'
+pesapal.consumer_secret = 'consumer-secret'
+### change to false in production environment
+pesapal.testing = True
 
 
 ### post a direct order
 
 post_params = {
-  'oauth_callback': 'https://www.example.com/post_payment_page/'
+  'oauth_callback': 'https://website.example.com/callback/'
 }
 request_data = {
-  'Amount': '100',
-  'Description': 'E-book purchase',
+  'Amount': '10',
+  'Description': 'E-book purchase 2',
   'Type': 'MERCHANT',
-  'Reference': '12erwe',
-  'PhoneNumber': '0700111000'
+  'Reference': '000',
+  'Email': 'john@test.com',
+  'Currency': 'USD',
 }
 # build url to redirect user to confirm payment
 url = pesapal.postDirectOrder(post_params, request_data)
-
+print(url)
 
 ### get order status
 
 post_params = {
   'pesapal_merchant_reference': '000',
-  'pesapal_transaction_tracking_id': '000'
+  'pesapal_transaction_tracking_id': 'f4a878c5-2cad-4dd8-8378-6c2e308db123'
 }
 url = pesapal.queryPaymentStatus(post_params)
-response = urllib2.urlopen(url)
-print response.read()
+response = requests.get(url)
+print(response.text)
 
 
 ### get order status by ref
@@ -50,19 +52,19 @@ post_params = {
   'pesapal_merchant_reference': '000'
 }
 url = pesapal.queryPaymentStatusByMerchantRef(post_params)
-response = urllib2.urlopen(url)
-print response.read()
+response = requests.get(url)
+print(response.text)
 
 
 ### get detailed order status
 
 post_params = {
   'pesapal_merchant_reference': '000',
-  'pesapal_transaction_tracking_id': '000'
+  'pesapal_transaction_tracking_id': 'f4a878c5-2cad-4dd8-8378-6c2e308db123'
 }
 url = pesapal.queryPaymentDetails(post_params)
-response = urllib2.urlopen(url)
-print response.read()
+response = requests.get(url)
+print(response.text)
 
 ```
 
